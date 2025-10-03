@@ -29,6 +29,12 @@ function initializeSerial(portPath, onDataCallback) {
         });
       }
 
+      // 检查端口路径是否存在
+      if (!portPath) {
+        reject(new Error('Port path is required'));
+        return;
+      }
+
       // 创建新的串口连接
       port = new SerialPort({
         path: portPath,
@@ -60,6 +66,15 @@ function initializeSerial(portPath, onDataCallback) {
 
       port.on('error', (err) => {
         console.error('Serial port error:', err.message);
+        // 尝试自动重新连接
+        if (err.code === 'EIO') {
+          console.log('I/O error detected, attempting to close port');
+          if (port && port.isOpen) {
+            port.close(() => {
+              console.log('Port closed after I/O error');
+            });
+          }
+        }
       });
 
       port.on('close', () => {
@@ -82,6 +97,14 @@ function sendCommand(command) {
       port.write(command, (err) => {
         if (err) {
           console.error('Error sending command:', err.message);
+          // 如果是I/O错误，尝试关闭端口
+          if (err.code === 'EIO') {
+            if (port && port.isOpen) {
+              port.close(() => {
+                console.log('Port closed after I/O error during write');
+              });
+            }
+          }
           reject(err);
         } else {
           console.log('Command sent successfully');

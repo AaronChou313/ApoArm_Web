@@ -5,8 +5,8 @@ const VideoStream = () => {
     <div className="video-panel">
       <div className="video-placeholder">
         <div style={{ fontSize: '3rem' }}>📹</div>
-        <p>视频流显示区域</p>
-        <p>机械臂末端USB相机画面</p>
+        <p>Video Stream Display</p>
+        <p>USB Camera Feed from Robotic Arm End Effector</p>
       </div>
     </div>
   );

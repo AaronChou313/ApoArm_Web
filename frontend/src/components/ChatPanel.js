@@ -28,8 +28,8 @@ const ChatPanel = ({ messages, onSendMessage, onLLMResponse }) => {
   return (
     <div className="chat-section">
       <div className="chat-list">
-        <h3>对话历史</h3>
-        <p>会话 1</p>
+        <h3>Chat History</h3>
+        <p>Session 1</p>
       </div>
       <div className="chat-window">
         <div className="messages">
@@ -46,9 +46,9 @@ const ChatPanel = ({ messages, onSendMessage, onLLMResponse }) => {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="输入指令..."
+            placeholder="Enter command..."
           />
-          <button onClick={handleSend}>发送</button>
+          <button onClick={handleSend}>Send</button>
         </div>
       </div>
     </div>

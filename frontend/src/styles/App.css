@@ -48,6 +48,7 @@ body {
   flex-direction: column;
   border-right: 1px solid #ddd;
   background-color: white;
+  height: calc(100vh - 60px - 60px); /* 减去导航栏和串口面板的高度 */
 }
 
 .chat-list {
@@ -63,6 +64,7 @@ body {
   display: flex;
   flex-direction: column;
   padding: 10px;
+  min-height: 0; /* 允许收缩 */
 }
 
 .messages {
@@ -72,6 +74,7 @@ body {
   background-color: #f9f9f9;
   margin-bottom: 10px;
   border-radius: 4px;
+  overscroll-behavior: contain; /* 防止滚动传播 */
 }
 
 .message {
@@ -125,6 +128,12 @@ body {
   overflow: hidden;
 }
 
+.top-section {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
 .video-panel {
   flex: 1;
   background-color: #000;
@@ -132,7 +141,7 @@ body {
   align-items: center;
   justify-content: center;
   color: white;
-  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
 }
 
 .video-placeholder {
@@ -145,7 +154,7 @@ body {
 }
 
 .simulation-panel {
-  height: 300px;
+  flex: 1;
   background-color: #fff;
   display: flex;
   align-items: center;
@@ -157,6 +166,7 @@ body {
   padding: 20px;
   background-color: #f8f9fa;
   border-bottom: 1px solid #dee2e6;
+  flex-shrink: 0; /* 防止面板被压缩 */
 }
 
 .serial-panel select, .serial-panel button {
@@ -188,6 +198,7 @@ body {
 .control-panel {
   padding: 20px;
   background-color: white;
+  flex-shrink: 0; /* 防止面板被压缩 */
 }
 
 .control-group {
@@ -266,5 +277,14 @@ body {
   
   .control-section {
     height: 60%;
+  }
+  
+  .top-section {
+    flex-direction: column;
+  }
+  
+  .video-panel {
+    border-right: none;
+    border-bottom: 1px solid #ddd;
   }
 }

@@ -11,7 +11,7 @@ const socket = io('http://localhost:3001');
 
 function App() {
   const [messages, setMessages] = useState([
-    { sender: 'bot', text: '您好！我是机械臂控制助手，请告诉我您需要什么操作。' }
+    { sender: 'bot', text: 'Hello! I am the robotic arm control assistant. Please tell me what operation you need.' }
   ]);
   const [serialPorts, setSerialPorts] = useState([]);
   const [selectedPort, setSelectedPort] = useState('');
@@ -151,12 +151,12 @@ function App() {
         </select>
 
         {!isConnected ? (
-          <button onClick={handleConnect}>连接串口</button>
+          <button onClick={handleConnect}>Connect Serial</button>
         ) : (
-          <button className="disconnect" onClick={handleDisconnect}>断开连接</button>
+          <button className="disconnect" onClick={handleDisconnect}>Disconnect</button>
         )}
 
-        <span>状态: {isConnected ? '已连接' : '未连接'}</span>
+        <span>Status: {isConnected ? 'Connected' : 'Disconnected'}</span>
       </div>
 
       <div className="main-content">
@@ -166,8 +166,10 @@ function App() {
         />
 
         <div className="control-section">
-          <VideoStream />
-          <RobotArm3D angles={angles} />
+          <div className="top-section">
+            <VideoStream />
+            <RobotArm3D angles={angles} />
+          </div>
           <ControlPanel
             onSendCommand={handleSendCommand}
             serialData={serialData}

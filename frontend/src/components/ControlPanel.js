@@ -52,10 +52,10 @@ const ControlPanel = ({ onSendCommand, serialData }) => {
   return (
     <div className="control-panel">
       <div className="control-group">
-        <h3>机械臂控制</h3>
+        <h3>Robotic Arm Control</h3>
         
         <div className="slider-container">
-          <label>旋转轴 (ID:0)</label>
+          <label>Yaw (ID:0)</label>
           <input
             type="range"
             min="0"
@@ -64,11 +64,11 @@ const ControlPanel = ({ onSendCommand, serialData }) => {
             onChange={(e) => handleSliderChange('yaw', e.target.value)}
           />
           <span>{angles.yaw}°</span>
-          <button onClick={() => sendCommand(0, angles.yaw)}>发送</button>
+          <button onClick={() => sendCommand(0, angles.yaw)}>Send</button>
         </div>
         
         <div className="slider-container">
-          <label>大臂 (ID:1)</label>
+          <label>Arm1 (ID:1)</label>
           <input
             type="range"
             min="0"
@@ -77,11 +77,11 @@ const ControlPanel = ({ onSendCommand, serialData }) => {
             onChange={(e) => handleSliderChange('arm1', e.target.value)}
           />
           <span>{angles.arm1}°</span>
-          <button onClick={() => sendCommand(1, angles.arm1)}>发送</button>
+          <button onClick={() => sendCommand(1, angles.arm1)}>Send</button>
         </div>
         
         <div className="slider-container">
-          <label>小臂 (ID:2)</label>
+          <label>Arm2 (ID:2)</label>
           <input
             type="range"
             min="0"
@@ -90,30 +90,30 @@ const ControlPanel = ({ onSendCommand, serialData }) => {
             onChange={(e) => handleSliderChange('arm2', e.target.value)}
           />
           <span>{angles.arm2}°</span>
-          <button onClick={() => sendCommand(2, angles.arm2)}>发送</button>
+          <button onClick={() => sendCommand(2, angles.arm2)}>Send</button>
         </div>
         
         <div className="control-buttons">
-          <button className="send" onClick={sendAllCommands}>全部发送</button>
-          <button className="reset" onClick={resetToInitial}>重置初始位置</button>
+          <button className="send" onClick={sendAllCommands}>Send All</button>
+          <button className="reset" onClick={resetToInitial}>Reset to Initial Position</button>
         </div>
       </div>
       
       <div className="control-group">
-        <h3>串口状态</h3>
+        <h3>Serial Status</h3>
         {serialData ? (
           <div>
-            <p style={{color: 'green', fontWeight: 'bold'}}>✓ 接收到数据</p>
-            <p><strong>原始数据:</strong> {serialData}</p>
-            <p><strong>解析结果:</strong></p>
+            <p style={{color: 'green', fontWeight: 'bold'}}>✓ Data Received</p>
+            <p><strong>Raw Data:</strong> {serialData}</p>
+            <p><strong>Parsed Results:</strong></p>
             <ul>
-              <li>旋转轴角度: {angles.yaw}°</li>
-              <li>大臂角度: {angles.arm1}°</li>
-              <li>小臂角度: {angles.arm2}°</li>
+              <li>Yaw Angle: {angles.yaw}°</li>
+              <li>Arm1 Angle: {angles.arm1}°</li>
+              <li>Arm2 Angle: {angles.arm2}°</li>
             </ul>
           </div>
         ) : (
-          <p style={{color: 'orange'}}>等待串口数据...</p>
+          <p style={{color: 'orange'}}>Waiting for serial data...</p>
         )}
       </div>
     </div>

@@ -63,7 +63,12 @@ io.on('connection', (socket) => {
       }
     } catch (error) {
       console.error('Error sending command:', error);
-      socket.emit('commandSent', { success: false, error: error.message });
+      // 如果是I/O错误，通知前端重新连接
+      if (error.code === 'EIO') {
+        socket.emit('commandSent', { success: false, error: 'Serial port I/O error. Please reconnect.' });
+      } else {
+        socket.emit('commandSent', { success: false, error: error.message });
+      }
     }
   });
 
@@ -75,7 +80,7 @@ io.on('connection', (socket) => {
       // 发送处理中的状态
       socket.emit('llmResponse', { 
         status: 'processing', 
-        message: '正在处理您的指令...' 
+        message: 'Processing your command...' 
       });
       
       // 调用LLM处理用户输入
@@ -100,10 +105,15 @@ io.on('connection', (socket) => {
                 socket.emit('commandSent', { success: true, command: cmd.trim() + '\\r\\n' });
               } else {
                 socket.emit('commandSent', { success: false, error: 'Serial port not open' });
+                break; // 如果端口关闭，停止发送命令
               }
             } catch (sendError) {
               console.error('Error sending command:', sendError);
               socket.emit('commandSent', { success: false, error: sendError.message });
+              // 如果是I/O错误，停止发送更多命令
+              if (sendError.code === 'EIO') {
+                break;
+              }
             }
             // 添加小延迟以避免命令过快发送
             await new Promise(resolve => setTimeout(resolve, 100));
@@ -114,7 +124,7 @@ io.on('connection', (socket) => {
       console.error('Error processing command:', error);
       socket.emit('llmResponse', { 
         status: 'error', 
-        message: '处理指令时出现错误，请重试。' 
+        message: 'Error processing command. Please try again.' 
       });
     }
   });
